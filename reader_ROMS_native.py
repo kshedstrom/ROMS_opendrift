@@ -177,6 +177,9 @@ class Reader(BaseReader, StructuredReader):
                         elif gv in ['angle']:
                             setname = 'angle_xi_east'
                             setattr(self, setname, gf.variables[gv][:])
+                        elif gv in ['h']:
+                            setname = 'sea_floor_depth_below_sea_level'
+                            setattr(self, setname, gf.variables[gv][:])
                         else:
                             setname = gv
                             setattr(self, gv, gf.variables[gv][:])
@@ -283,8 +286,9 @@ class Reader(BaseReader, StructuredReader):
                             np.min([indy.max()+buffer, self.lon.shape[0]-1]))
 
         # Find depth levels covering all elements
-	pdb.set_trace()
-        if z.min() == 0 or not hasattr(self, 'hc'):
+#       pdb.set_trace()
+#       if z.min() == 0 or not hasattr(self, 'hc'):
+        if False:
             indz = self.num_layers - 1  # surface layer
             variables['z'] = 0
 
@@ -295,8 +299,8 @@ class Reader(BaseReader, StructuredReader):
                 self.sea_floor_depth_below_sea_level = \
                     self.Dataset.variables['h'][:]
 
-                Htot = self.sea_floor_depth_below_sea_level
-                self.z_rho_tot = depth.sdepth(Htot, self.hc, self.Cs_r,
+            Htot = self.sea_floor_depth_below_sea_level
+            self.z_rho_tot = depth.sdepth(Htot, self.hc, self.Cs_r,
                                               Vtransform=self.Vtransform)
 
             H = self.sea_floor_depth_below_sea_level[indy, indx]

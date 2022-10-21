@@ -30,13 +30,13 @@ o.add_reader(r)
 #%%
 # Seed elements at defined positions, depth and time
 o.seed_elements(lon=-168.4, lat=66.65, radius=10000, number=600,
-                time=datetime(2001, 3, 1))
+                z=-20, time=datetime(2001, 3, 1))
 
 #%%
 # Running model
 #o.run(time_step=3600)
 o.run(time_step=timedelta(minutes=30),
-       duration=timedelta(days=25))
+       duration=timedelta(days=10))
 
 #%%
 # Print and plot results, with lines colored by particle depth
